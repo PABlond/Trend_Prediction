@@ -1,3 +1,7 @@
+## Requirements
+
+To start or build the application, you have to create a file called `.env` at the root of the application. 
+The content of this file have to be based on the example `.env.example`
 ## Available Scripts
 
 In the project directory, you can run:
