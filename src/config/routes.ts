@@ -1,24 +1,32 @@
 class Routes {
+  apiUrl = "";
   flowId = "1";
 
+  constructor() {
+    if (process.env.NODE_ENV !== "development") {
+      const { REACT_APP_API_URL: apiUrl = "" } = process.env;
+      this.apiUrl = apiUrl;
+    }
+  }
+
   auth() {
-    return `auth/`;
+    return `${this.apiUrl}auth/`;
   }
 
   flow(flowId: number = 1) {
-    return `flows/${flowId}`;
+    return `${this.apiUrl}flows/${flowId}`;
   }
 
   flowRuns(flowId: number = 1) {
-    return `flows/${flowId}/runs`;
+    return `${this.apiUrl}flows/${flowId}/runs`;
   }
 
   runOutputs(runId: number, flowId: number = 1) {
-    return `flows/${flowId}/runs/${runId}/outputs`;
+    return `${this.apiUrl}flows/${flowId}/runs/${runId}/outputs`;
   }
 
   trends(ouputId: number, runId: number, flowId: number = 1) {
-    return `flows/${flowId}/runs/${runId}/outputs/${ouputId}/trends`;
+    return `${this.apiUrl}flows/${flowId}/runs/${runId}/outputs/${ouputId}/trends`;
   }
 }
 
