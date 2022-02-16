@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from "react";
 
-function App() {
+import { Loading } from "./components";
+import { TrendsPicker, AppHeader } from "./containers";
+import { useApiRequests } from "./hooks";
+import { ApiRequestsContext, InitApiRequests } from "./hooks";
+import { Style } from "./App.style";
+
+export const AppLayout: FC = ({ children }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApiRequestsContext.Provider value={InitApiRequests()}>
+      {children}
+    </ApiRequestsContext.Provider>
   );
-}
+};
 
-export default App;
+export const App = () => {
+  const { flowState } = useApiRequests();
+  return (
+    <Style.Container>
+      {flowState ? (
+        <>
+          <AppHeader />
+          <TrendsPicker />
+        </>
+      ) : (
+        <Loading />
+      )}
+    </Style.Container>
+  );
+};
